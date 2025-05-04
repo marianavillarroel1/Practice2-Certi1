@@ -60,8 +60,40 @@ namespace Practice2_Certi1.Controllers
         [HttpGet]
         public IActionResult GetAllPatients()
         {
-            return Ok();
+            string filePath = "patients.txt";
+            List<PatientWithBloodDto> patients = new List<PatientWithBloodDto>();
+
+            if (!System.IO.File.Exists(filePath))
+                return Ok(patients); // Retorna lista vacía si el archivo aún no existe
+
+            try
+            {
+                var lines = System.IO.File.ReadAllLines(filePath);
+
+                foreach (var line in lines)
+                {
+                    var data = line.Split(',');
+
+                    if (data.Length == 4)
+                    {
+                        patients.Add(new PatientWithBloodDto
+                        {
+                            Name = data[0],
+                            LastName = data[1],
+                            CI = data[2],
+                            BloodGroup = data[3]
+                        });
+                    }
+                }
+
+                return Ok(patients);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al leer pacientes: {ex.Message}");
+            }
         }
+
 
         // Endpoint GET /patients/{ci}
         [HttpGet("{ci}")]
@@ -78,4 +110,11 @@ namespace Practice2_Certi1.Controllers
         public string LastName { get; set; }
         public string CI { get; set; }
     }
+
+    //clase temporal 
+    public class PatientWithBloodDto : PatientDto
+    {
+        public string BloodGroup { get; set; }
+    }
+
 }

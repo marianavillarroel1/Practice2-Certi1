@@ -1,2 +1,6 @@
 Juan,Pérez,12345678,A-
 Juan,Pérez,12345678,A-
+Mariana,Villarroel,111111,A-
+Mariana,Villarroel,111111,A-
+Natalia,Deheza,22222222,B-
+Romina,Saniz,333333333,A+
